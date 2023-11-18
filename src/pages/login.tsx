@@ -1,12 +1,15 @@
 import { ChangeEvent, useState } from "react";
-import { Container, Row, Toast, Col, ToastContainer, Spinner } from "react-bootstrap";
+import { Container, Row, Toast, Col, ToastContainer, Spinner, ToastBody } from "react-bootstrap";
 import { ILoginRequest } from "../interfaces/login.interface";
 import { Loginservice } from "../services/login.service";
 import { useNavigate } from "react-router-dom";
 import tokenService from "../services/token.service";
 const Login = () => {
-    const [show, setShow] = useState(false);
-    const [err, setError] = useState("");
+
+    const [apperror, setError] = useState({
+        show: false,
+        message: ""
+    });
     const [values, setValues] = useState<ILoginRequest>({ email: '', password: '' });
     const [isLoading, setLoading] = useState(false);
     const [rememberMe, setRememberMe] = useState(false);
@@ -15,6 +18,7 @@ const Login = () => {
     const handleSubmit = (e: any) => {
         e.preventDefault();
         e.stopPropagation();
+        setLoading(true);
         Loginservice.login(values).then(d => {
             console.log(d.data)
 
@@ -23,6 +27,10 @@ const Login = () => {
                 tokenService.setToken(d.data.data.Token);
                 nav('/users', { replace: true });
             }
+        }).catch(err => {
+            setError({ ...apperror, show: true, message: err.message });
+            setLoading(false);
+
         })
     }
     const handleChange = (e: any) => {
@@ -45,13 +53,14 @@ const Login = () => {
                             <Toast
                                 className="d-inline-block m-1"
                                 onClose={() => {
-                                    setShow(false);
+                                    setError({ ...apperror, show: false })
                                 }}
-                                show={show}
+                                show={apperror.show}
                                 delay={3000}
                                 autohide
+                                bg="danger"
                             >
-                                <Toast.Body>{err}</Toast.Body>
+                                <Toast.Body>{apperror.message}</Toast.Body>
                             </Toast>
                         </ToastContainer>
                     </Col>
