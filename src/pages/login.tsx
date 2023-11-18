@@ -1,20 +1,27 @@
 import { ChangeEvent, useState } from "react";
 import { Container, Row, Toast, Col, ToastContainer, Spinner } from "react-bootstrap";
-import { ILogin } from "../interfaces/login.interface";
+import { ILoginRequest } from "../interfaces/login.interface";
 import { Loginservice } from "../services/login.service";
+import { useNavigate } from "react-router-dom";
+import tokenService from "../services/token.service";
 const Login = () => {
     const [show, setShow] = useState(false);
     const [err, setError] = useState("");
-    const [values, setValues] = useState<ILogin>({ email: '', password: '' });
+    const [values, setValues] = useState<ILoginRequest>({ email: '', password: '' });
     const [isLoading, setLoading] = useState(false);
     const [rememberMe, setRememberMe] = useState(false);
+    const nav = useNavigate();
 
     const handleSubmit = (e: any) => {
         e.preventDefault();
         e.stopPropagation();
         Loginservice.login(values).then(d => {
-            if (d.data) {
-                console.log(d.data)
+            console.log(d.data)
+
+            if (d.data.data.Token) {
+                console.log(d.data.data.Token)
+                tokenService.setToken(d.data.data.Token);
+                nav('/users', { replace: true });
             }
         })
     }
@@ -92,7 +99,7 @@ const Login = () => {
                                         {isLoading && <Spinner variant='primary' />}
                                     </div>
                                     <div className="form-check mt-3">
-                                        <input type="checkbox" onChange={() => { setRememberMe(!rememberMe) }} className="form-check-input" id="exampleCheck1" />
+                                        <input type="checkbox" onChange={() => { setRememberMe(!rememberMe) }} className="form-check-input" />
                                         <label className="form-check-label" >Remember Me</label>
                                     </div>
                                 </form>

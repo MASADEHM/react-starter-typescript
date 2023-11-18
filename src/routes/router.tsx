@@ -31,14 +31,20 @@ const publicRoutes: RouteObject[] = [{
 }]
 const privateRoute: RouteObject[] = [{
     path: '/',
-    element: <PrivateRoute />,
-    children: [{
-        path: '/users',
-        element: <Users />
-    }, {
-        path: '/add',
-        element: <Add />
-    }]
+    element: <App />,
+    children: [
+        {
+            path: "/",
+            element: <PrivateRoute />,
+            children: [{
+                path: '/users',
+                element: <Users />
+            }, {
+                path: '/add',
+                element: <Add />
+            }]
+        }
+    ]
 }]
 const TRouter = createBrowserRouter([
     ...publicRoutes, ...privateRoute

@@ -1,10 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Nav, Container, Navbar } from "react-bootstrap";
+import tokenService from "../services/token.service";
 
 const Menu = () => {
-    const isLoggedIn = false;
+    const isLoggedIn = tokenService.getToken();
     const nav = useNavigate();
     const logout = () => {
+        tokenService.removeToken();
         nav('/', { replace: true })
     }
     const publicLinks = [
