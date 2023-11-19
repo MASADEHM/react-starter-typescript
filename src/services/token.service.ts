@@ -10,6 +10,10 @@ const tokenService = {
         })
     },
     getToken: () => {
+        return cookie.get(cookiename);
+    }
+    ,
+    LoggedIn: () => {
         return cookie.get(cookiename) ? true : false
     }
     ,
