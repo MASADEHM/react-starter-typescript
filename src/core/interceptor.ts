@@ -1,7 +1,6 @@
 import axios, { AxiosInstance, InternalAxiosRequestConfig } from "axios";
-import { Loginservice } from "../services/login.service";
 import tokenService from "../services/token.service";
-import { useNavigate } from "react-router-dom";
+
 
 
 const axiosInstance: AxiosInstance = axios.create();
