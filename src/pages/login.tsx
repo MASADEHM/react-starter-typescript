@@ -1,54 +1,39 @@
-import { ChangeEvent, useState } from "react";
-import { Container, Row, Toast, Col, ToastContainer, Spinner } from "react-bootstrap";
+import {  useState } from "react";
+import { Container, Row } from "react-bootstrap";
 import { ILogin } from "../interfaces/login.interface";
 import { Loginservice } from "../services/login.service";
+import { useNavigate } from "react-router-dom";
+import {message,Spin} from  "antd"
 const Login = () => {
-    const [show, setShow] = useState(false);
-    const [err, setError] = useState("");
     const [values, setValues] = useState<ILogin>({ email: '', password: '' });
     const [isLoading, setLoading] = useState(false);
     const [rememberMe, setRememberMe] = useState(false);
-
+    const nav = useNavigate();
     const handleSubmit = (e: any) => {
         e.preventDefault();
         e.stopPropagation();
-        Loginservice.login(values).then(d => {
+        setLoading(true);
+        Loginservice.login().then(d => {
             if (d.data) {
                 console.log(d.data)
+                Loginservice.setToken("true");
+                nav('/', { replace: true })
             }
-        })
+        }).catch(e => {
+            message.error(e.message)
+            setLoading(false);
+        });
     }
     const handleChange = (e: any) => {
         const name = e.target.name;
         const val = e.target.value
-        console.log(values)
         setValues({ ...values, [name]: val })
     }
 
     return (
         <>
             <Container>
-                <Row>
-                    <Col className="mx-auto" sm={9} md={7} lg={5}>
-                        <ToastContainer
-                            position="top-end"
-                            className="p-3"
-                            style={{ zIndex: 1 }}
-                        >
-                            <Toast
-                                className="d-inline-block m-1"
-                                onClose={() => {
-                                    setShow(false);
-                                }}
-                                show={show}
-                                delay={3000}
-                                autohide
-                            >
-                                <Toast.Body>{err}</Toast.Body>
-                            </Toast>
-                        </ToastContainer>
-                    </Col>
-                </Row>
+             
                 <Row>
                     <div className="col-sm-9 col-md-7 col-lg-5 mx-auto">
                         <div className="card border-0 shadow rounded-3 my-5">
@@ -89,7 +74,7 @@ const Login = () => {
                                         >
                                             Sign in
                                         </button>}
-                                        {isLoading && <Spinner variant='primary' />}
+                                        {isLoading && <Spin/>}
                                     </div>
                                     <div className="form-check mt-3">
                                         <input type="checkbox" onChange={() => { setRememberMe(!rememberMe) }} className="form-check-input" id="exampleCheck1" />
