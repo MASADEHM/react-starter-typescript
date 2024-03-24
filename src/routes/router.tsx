@@ -8,6 +8,7 @@ import Users from "../pages/users/users"
 import Add from "../pages/users/add"
 import { createBrowserRouter } from 'react-router-dom'
 import Login from "../pages/login"
+import Edituser from "../pages/users/edituser"
 
 const publicRoutes: RouteObject[] = [{
     path: '/',
@@ -31,14 +32,23 @@ const publicRoutes: RouteObject[] = [{
 }]
 const privateRoute: RouteObject[] = [{
     path: '/',
-    element: <PrivateRoute />,
-    children: [{
-        path: '/users',
-        element: <Users />
-    }, {
-        path: '/add',
-        element: <Add />
-    }]
+    element: <App />,
+    children: [
+        {
+            path: "/",
+            element: <PrivateRoute />,
+            children: [{
+                path: '/users',
+                element: <Users />
+            }, {
+                path: '/add',
+                element: <Add />
+            },{
+                path:'/edituser/:id',
+                element:<Edituser/>
+            }]
+        }
+    ]
 }]
 const TRouter = createBrowserRouter([
     ...publicRoutes, ...privateRoute

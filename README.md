@@ -1,6 +1,13 @@
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Project uses the below :
+ - react-bootstrap component and desgin.
+ - react-router-dom for routing
+ - axios for API calls (with interceptors)
+ - Token based authunctaion using https://www.appsloveworld.com/sample-rest-api-url-for-testing-with-authentication.
+ - universal-cookie for cookies management
+   
 
 ## Available Scripts
 

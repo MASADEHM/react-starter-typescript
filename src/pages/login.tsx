@@ -1,11 +1,11 @@
 import {  useState } from "react";
 import { Container, Row } from "react-bootstrap";
-import { ILogin } from "../interfaces/login.interface";
+import { ILoginRequest } from "../interfaces/login.interface";
 import { Loginservice } from "../services/login.service";
 import { useNavigate } from "react-router-dom";
 import {message,Spin} from  "antd"
 const Login = () => {
-    const [values, setValues] = useState<ILogin>({ email: '', password: '' });
+    const [values, setValues] = useState<ILoginRequest>({ email: '', password: '' });
     const [isLoading, setLoading] = useState(false);
     const [rememberMe, setRememberMe] = useState(false);
     const nav = useNavigate();
@@ -77,7 +77,7 @@ const Login = () => {
                                         {isLoading && <Spin/>}
                                     </div>
                                     <div className="form-check mt-3">
-                                        <input type="checkbox" onChange={() => { setRememberMe(!rememberMe) }} className="form-check-input" id="exampleCheck1" />
+                                        <input type="checkbox" onChange={() => { setRememberMe(!rememberMe) }} className="form-check-input" />
                                         <label className="form-check-label" >Remember Me</label>
                                     </div>
                                 </form>

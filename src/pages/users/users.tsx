@@ -1,8 +1,9 @@
 import { FormEvent, useEffect, useState } from "react"
-import { usersService } from "../../services/users.service";
+
 import { Checkbox, Spin } from "antd";
 import { message } from "antd";
 import { CheckboxChangeEvent } from "antd/es/checkbox";
+import { usersService } from "../../services/users.service";
 const Users = () => {
     const [userslist, setUsers] = useState<any[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
@@ -17,7 +18,6 @@ const Users = () => {
                 selectedIds.push(d)
             }
         });
-
         usersService.get().then(d => {
             console.log(d.data);
             setUsers(d.data);
