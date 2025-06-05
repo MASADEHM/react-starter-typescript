@@ -1,16 +1,13 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Nav, Container, Navbar } from "react-bootstrap";
-<<<<<<< HEAD
-import { Loginservice } from "../services/login.service";
 
-const Menu = () => {
-    const isLoggedIn = Loginservice.getToken();
-=======
+import { Loginservice } from "../services/login.service";
 import tokenService from "../services/token.service";
+
 
 const Menu = () => {
     const isLoggedIn = tokenService.getToken();
->>>>>>> defeaf65741bac5441b689c8a69e95d4407663c8
+    
     const nav = useNavigate();
     const logout = () => {
         tokenService.removeToken();
@@ -37,7 +34,7 @@ const Menu = () => {
         title: 'Add',
         path: '/add'
     }]
-    
+
     const Links = isLoggedIn ? [...publicLinks, ...privateLinks] : [...publicLinks]
     return (<>
         <Container>

@@ -5,7 +5,7 @@ import { Loginservice } from "../services/login.service";
 import { useNavigate } from "react-router-dom";
 import {message,Spin} from  "antd"
 const Login = () => {
-    const [values, setValues] = useState<ILoginRequest>({ email: '', password: '' });
+    const [login, setlogin] = useState<ILoginRequest>({ email: '', password: '' });
     const [isLoading, setLoading] = useState(false);
     const [rememberMe, setRememberMe] = useState(false);
     const nav = useNavigate();
@@ -13,21 +13,25 @@ const Login = () => {
         e.preventDefault();
         e.stopPropagation();
         setLoading(true);
-        Loginservice.login().then(d => {
-            if (d.data) {
-                console.log(d.data)
-                Loginservice.setToken("true");
-                nav('/', { replace: true })
-            }
-        }).catch(e => {
-            message.error(e.message)
-            setLoading(false);
-        });
+        if(true){
+            Loginservice.setToken("true");
+            nav('/users', { replace: true })
+        }
+        // Loginservice.login(login).then(d => {
+        //     if (d.data) {
+        //         console.log(d.data)
+        //         Loginservice.setToken("true");
+        //         nav('/', { replace: true })
+        //     }
+        // }).catch(e => {
+        //     message.error(e.message)
+        //     setLoading(false);
+        // });
     }
     const handleChange = (e: any) => {
         const name = e.target.name;
         const val = e.target.value
-        setValues({ ...values, [name]: val })
+        setlogin({ ...login , [name]: val })
     }
 
     return (

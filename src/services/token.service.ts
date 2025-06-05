@@ -1,7 +1,7 @@
 import Cookies from "universal-cookie"
 
 const cookie = new Cookies();
-const cookiename: string = 'react-strater'
+const cookiename: string = '_reactstartercookie'
 
 const tokenService = {
     setToken: (val: string) => {
